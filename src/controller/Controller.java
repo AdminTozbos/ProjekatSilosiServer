@@ -29,4 +29,20 @@ public class Controller {
     public RukovodilacKooperacije login(List<String> parametri) {
         return dbb.login(parametri);
     }
+
+    public boolean dodajRukovodioca(RukovodilacKooperacije ruk) {
+        return dbb.dodajRukovodioca(ruk);
+    }
+
+    public List<RukovodilacKooperacije> vratiSveRukovodioce() {
+        return dbb.vratiSveRukovodioce();
+    }
+
+    public boolean obrisiRukovodioca(RukovodilacKooperacije ruko) {
+        return dbb.obrisiRukovodioca(ruko);
+    }
+
+    public boolean izmeniRukovodioca(RukovodilacKooperacije ruk2) {
+        return dbb.izmeniRukovodioca(ruk2);
+    }
 }

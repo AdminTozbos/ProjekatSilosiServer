@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.KlijentskiZahtev;
 import model.Operacije;
+import model.RukovodilacKooperacije;
 import model.ServerskiOdgovor;
 
 /**
@@ -37,6 +38,22 @@ public class ObradaKlijentskihZahteva extends Thread{
                 case Operacije.LOGIN:
                     List<String>parametri=(List<String>) kz.getZahtev();
                     so.setOdgovor(Controller.getInstance().login(parametri));
+                    break;
+                case Operacije.DODAJRUK:
+                    RukovodilacKooperacije ruk=(RukovodilacKooperacije) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().dodajRukovodioca(ruk));
+                    break;
+                case Operacije.VRATILISTURUK:
+                    List<RukovodilacKooperacije> ruklist=Controller.getInstance().vratiSveRukovodioce();
+                    so.setOdgovor(ruklist);
+                    break;
+                case Operacije.OBRISIRUK:
+                    RukovodilacKooperacije ruko=(RukovodilacKooperacije) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().obrisiRukovodioca(ruko));
+                    break;
+                case Operacije.IZMENIRUK:
+                    RukovodilacKooperacije ruk2=(RukovodilacKooperacije) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().izmeniRukovodioca(ruk2));
                     break;
                 default:
                     System.out.println("Greska");
