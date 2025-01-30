@@ -5,6 +5,8 @@
 package controller;
 
 import baza.DBBroker;
+import java.util.List;
+import model.RukovodilacKooperacije;
 
 /**
  *
@@ -22,5 +24,9 @@ public class Controller {
             controller=new Controller();
         }
         return controller;
+    }
+
+    public RukovodilacKooperacije login(List<String> parametri) {
+        return dbb.login(parametri);
     }
 }

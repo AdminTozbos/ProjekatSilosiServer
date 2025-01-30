@@ -4,10 +4,12 @@
  */
 package server;
 
+import controller.Controller;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.KlijentskiZahtev;
@@ -33,7 +35,8 @@ public class ObradaKlijentskihZahteva extends Thread{
             ServerskiOdgovor so=new ServerskiOdgovor();
             switch (kz.getOperacija()) {
                 case Operacije.LOGIN:
-                    
+                    List<String>parametri=(List<String>) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().login(parametri));
                     break;
                 default:
                     System.out.println("Greska");
