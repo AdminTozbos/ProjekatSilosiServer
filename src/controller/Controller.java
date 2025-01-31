@@ -6,6 +6,7 @@ package controller;
 
 import baza.DBBroker;
 import java.util.List;
+import model.PoljoprivrednaKultura;
 import model.RadnoIskustvo;
 import model.RukovodilacKooperacije;
 
@@ -61,5 +62,21 @@ public class Controller {
 
     public boolean izmeniIskustvo(RadnoIskustvo ri3) {
         return dbb.izmeniIskustvo(ri3);
+    }
+
+    public List<PoljoprivrednaKultura> vratiSveKulture() {
+        return dbb.vratiSveKulture();
+    }
+
+    public boolean dodajKulturu(PoljoprivrednaKultura pk) {
+        return dbb.dodajKulturu(pk);
+    }
+
+    public boolean obrisiKulturu(PoljoprivrednaKultura pk2) {
+        return dbb.obrisiKulturu(pk2);
+    }
+
+    public boolean izmeniKulturu(PoljoprivrednaKultura pk3) {
+        return dbb.izmeniKulturu(pk3);
     }
 }

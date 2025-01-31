@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Mesec;
+import model.PoljoprivrednaKultura;
 import model.RadnoIskustvo;
 import model.RukovodilacKooperacije;
 
@@ -177,5 +179,71 @@ public class DBBroker {
         }
         return false;
         
+    }
+
+    public List<PoljoprivrednaKultura> vratiSveKulture() {
+        List<PoljoprivrednaKultura>kulture=new ArrayList<>();
+        String query="SELECT *FROM kultura";
+        try {
+            
+            Statement s=Konekcija.getInstance().getConnection().createStatement();
+            ResultSet rs=s.executeQuery(query);
+            while (rs.next()) {                
+                int id=rs.getInt("id");
+                String isk=rs.getString("naziv");
+                Double cena=rs.getDouble("cena");
+                Mesec mesec=Mesec.valueOf(rs.getString("mesec"));
+                PoljoprivrednaKultura pk=new PoljoprivrednaKultura(id, isk, cena, mesec);
+               
+                kulture.add(pk);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return kulture;
+    }
+
+    public boolean dodajKulturu(PoljoprivrednaKultura pk) {
+        String query="INSERT INTO kultura (naziv,cena,mesec) VALUES (?,?,?)";
+        try {
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            ps.setString(1, pk.getNazivKulture());
+            ps.setDouble(2, pk.getCena());
+            ps.setString(3, String.valueOf(pk.getMesecZetve()));
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean obrisiKulturu(PoljoprivrednaKultura pk2) {
+        String query="DELETE FROM kultura WHERE id=?";
+        try {
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            ps.setInt(1, pk2.getIdKultura());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean izmeniKulturu(PoljoprivrednaKultura pk3) {
+        String query="UPDATE kultura SET naziv=?,cena=?,mesec=? WHERE id=?";
+        try {
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            ps.setString(1, pk3.getNazivKulture());
+            ps.setDouble(2, pk3.getCena());
+            ps.setString(3, String.valueOf(pk3.getMesecZetve()));
+            ps.setInt(4, pk3.getIdKultura());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }

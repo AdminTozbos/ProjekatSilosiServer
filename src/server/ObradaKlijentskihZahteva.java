@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.KlijentskiZahtev;
 import model.Operacije;
+import model.PoljoprivrednaKultura;
 import model.RadnoIskustvo;
 import model.RukovodilacKooperacije;
 import model.ServerskiOdgovor;
@@ -71,6 +72,22 @@ public class ObradaKlijentskihZahteva extends Thread{
                 case Operacije.IZMENIISK:
                     RadnoIskustvo ri3=(RadnoIskustvo) kz.getZahtev();
                     so.setOdgovor(Controller.getInstance().izmeniIskustvo(ri3));
+                    break;
+                case Operacije.VRATIKUL:
+                    
+                    so.setOdgovor(Controller.getInstance().vratiSveKulture());
+                    break;
+                 case Operacije.DODAJKUL:
+                     PoljoprivrednaKultura pk=(PoljoprivrednaKultura) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().dodajKulturu(pk));
+                    break;
+                case Operacije.OBRISIKUL:
+                     PoljoprivrednaKultura pk2=(PoljoprivrednaKultura) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().obrisiKulturu(pk2));
+                    break;
+                case Operacije.IZMENIKUL:
+                    PoljoprivrednaKultura pk3=(PoljoprivrednaKultura) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().izmeniKulturu(pk3));
                     break;
                 default:
                     System.out.println("Greska");
