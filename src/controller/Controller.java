@@ -6,6 +6,7 @@ package controller;
 
 import baza.DBBroker;
 import java.util.List;
+import model.RadnoIskustvo;
 import model.RukovodilacKooperacije;
 
 /**
@@ -44,5 +45,21 @@ public class Controller {
 
     public boolean izmeniRukovodioca(RukovodilacKooperacije ruk2) {
         return dbb.izmeniRukovodioca(ruk2);
+    }
+
+    public List<RadnoIskustvo> vratiSvaIskustva() {
+        return dbb.vratiSvaIskustva();
+    }
+
+    public Object dodajIskustvo(RadnoIskustvo ri) {
+        return dbb.dodajIskustvo(ri);
+    }
+
+    public boolean obrisiIskustvo(RadnoIskustvo ri2) {
+        return dbb.obrisiIskustvo(ri2);
+    }
+
+    public boolean izmeniIskustvo(RadnoIskustvo ri3) {
+        return dbb.izmeniIskustvo(ri3);
     }
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.RadnoIskustvo;
 import model.RukovodilacKooperacije;
 
 /**
@@ -108,6 +109,67 @@ public class DBBroker {
             ps.setString(2, ruk2.getPrezime());
             ps.setString(3, ruk2.getBrojTelefona());
             ps.setInt(4, ruk2.getId());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+        
+    }
+
+    public List<RadnoIskustvo> vratiSvaIskustva() {
+        List<RadnoIskustvo>iskustva=new ArrayList<>();
+        String query="SELECT *FROM iskustvo";
+        try {
+            
+            Statement s=Konekcija.getInstance().getConnection().createStatement();
+            ResultSet rs=s.executeQuery(query);
+            while (rs.next()) {                
+                int id=rs.getInt("id");
+                String isk=rs.getString("radnomesto");
+               RadnoIskustvo ri=new RadnoIskustvo(id, isk);
+               iskustva.add(ri);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return iskustva;
+    }
+
+    public Object dodajIskustvo(RadnoIskustvo ri) {
+        String query="INSERT INTO iskustvo (radnomesto) VALUES (?)";
+        try {
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            ps.setString(1, ri.getRadnoMesto());
+            
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean obrisiIskustvo(RadnoIskustvo ri2) {
+        String query="DELETE FROM iskustvo WHERE id=?";
+        try {
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            ps.setInt(1, ri2.getIdRadnoIskustvo());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean izmeniIskustvo(RadnoIskustvo ri3) {
+       String query="UPDATE iskustvo SET radnomesto=? WHERE id=?";
+        try {
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            ps.setString(1, ri3.getRadnoMesto());
+            ps.setInt(2, ri3.getIdRadnoIskustvo());
             ps.executeUpdate();
             return true;
         } catch (SQLException ex) {
