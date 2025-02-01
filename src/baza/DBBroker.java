@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Mesec;
 import model.PoljoprivrednaKultura;
+import model.PoljoprivrednoGazdinstvo;
+import model.PoljoprivrednoPreduzece;
 import model.RadnoIskustvo;
 import model.RukovodilacKooperacije;
 
@@ -239,6 +241,150 @@ public class DBBroker {
             ps.setDouble(2, pk3.getCena());
             ps.setString(3, String.valueOf(pk3.getMesecZetve()));
             ps.setInt(4, pk3.getIdKultura());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public List<PoljoprivrednoPreduzece> vratiSvaPreduzeca() {
+       List<PoljoprivrednoPreduzece>preduzeca=new ArrayList<>();
+        String query="SELECT *FROM preduzece";
+        try {
+            
+            Statement s=Konekcija.getInstance().getConnection().createStatement();
+            ResultSet rs=s.executeQuery(query);
+            while (rs.next()) {                
+                int id=rs.getInt("id");
+                String naziv=rs.getString("naziv");
+                String mesto=rs.getString("mesto");
+                String zastupnik=rs.getString("zastupnik");
+                String pib=rs.getString("pib");
+                String email=rs.getString("email");
+                PoljoprivrednoPreduzece pp=new PoljoprivrednoPreduzece(zastupnik, pib, email, id, naziv, mesto);
+               
+                preduzeca.add(pp);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return preduzeca;
+    }
+
+    public boolean dodajPreduzece(PoljoprivrednoPreduzece pp) {
+        String query="INSERT INTO preduzece (naziv,mesto,pib,email,zastupnik) VALUES (?,?,?,?,?)";
+        try {
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            ps.setString(1, pp.getNazivKooperanta());
+            ps.setString(2, pp.getMesto());
+            ps.setString(3, pp.getPib());
+            ps.setString(4, pp.getEmail());
+            ps.setString(5, pp.getPravniZastupnik());
+
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean izmeniPreduzece(PoljoprivrednoPreduzece pp2) {
+        String query="UPDATE preduzece SET naziv=?,mesto=?,pib=?,email=?,zastupnik=? WHERE id=?";
+        try {
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            ps.setString(1, pp2.getNazivKooperanta());
+            ps.setString(2, pp2.getMesto());
+            ps.setString(3, pp2.getPib());
+            ps.setString(4, pp2.getEmail());
+            ps.setString(5, pp2.getPravniZastupnik());
+            ps.setInt(6, pp2.getIdKooperant());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean obrisiPreduzece(PoljoprivrednoPreduzece pp3) {
+         String query="DELETE FROM preduzece WHERE id=?";
+        try {
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            ps.setInt(1, pp3.getIdKooperant());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    public List<PoljoprivrednoGazdinstvo> vratiSvaGazdinstva() {
+       List<PoljoprivrednoGazdinstvo>gazdinstva=new ArrayList<>();
+        String query="SELECT *FROM gazdinstvo";
+        try {
+            
+            Statement s=Konekcija.getInstance().getConnection().createStatement();
+            ResultSet rs=s.executeQuery(query);
+            while (rs.next()) {                
+                int id=rs.getInt("id");
+                String naziv=rs.getString("naziv");
+                String mesto=rs.getString("mesto");
+                String vlasnik=rs.getString("vlasnik");
+                String brtel=rs.getString("brtel");
+                
+                PoljoprivrednoGazdinstvo pp=new PoljoprivrednoGazdinstvo(vlasnik, brtel, id, naziv, mesto);
+                
+                gazdinstva.add(pp);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return gazdinstva;
+    }
+
+    public boolean dodajGazdinstvo(PoljoprivrednoGazdinstvo pp) {
+        String query="INSERT INTO gazdinstvo (naziv,mesto,vlasnik,brtel) VALUES (?,?,?,?)";
+        try {
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            ps.setString(1, pp.getNazivKooperanta());
+            ps.setString(2, pp.getMesto());
+            ps.setString(3, pp.getVlasnikGaz());
+            ps.setString(4, pp.getBrojTelefona());
+           
+
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean izmeniGazdinstvo(PoljoprivrednoGazdinstvo pp2) {
+        String query="UPDATE gazdinstvo SET naziv=?,mesto=?,vlasnik=?,brtel=? WHERE id=?";
+        try {
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            ps.setString(1, pp2.getNazivKooperanta());
+            ps.setString(2, pp2.getMesto());
+            ps.setString(3, pp2.getVlasnikGaz());
+            ps.setString(4, pp2.getBrojTelefona());
+            ps.setInt(5, pp2.getIdKooperant());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean obrisiGazdinstvo(PoljoprivrednoGazdinstvo pp3) {
+         String query="DELETE FROM gazdinstvo WHERE id=?";
+        try {
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            ps.setInt(1, pp3.getIdKooperant());
             ps.executeUpdate();
             return true;
         } catch (SQLException ex) {

@@ -7,6 +7,8 @@ package controller;
 import baza.DBBroker;
 import java.util.List;
 import model.PoljoprivrednaKultura;
+import model.PoljoprivrednoGazdinstvo;
+import model.PoljoprivrednoPreduzece;
 import model.RadnoIskustvo;
 import model.RukovodilacKooperacije;
 
@@ -78,5 +80,36 @@ public class Controller {
 
     public boolean izmeniKulturu(PoljoprivrednaKultura pk3) {
         return dbb.izmeniKulturu(pk3);
+    }
+
+    public List<PoljoprivrednoPreduzece> vratiSvaPreduzeca() {
+        return dbb.vratiSvaPreduzeca();
+    }
+
+    public boolean dodajPreduzece(PoljoprivrednoPreduzece pp) {
+        return dbb.dodajPreduzece(pp);
+    }
+
+    public boolean izmeniPreduzece(PoljoprivrednoPreduzece pp2) {
+        return dbb.izmeniPreduzece(pp2);
+    }
+
+    public boolean obrisiPreduzece(PoljoprivrednoPreduzece pp3) {
+        return dbb.obrisiPreduzece(pp3);
+    }
+    public List<PoljoprivrednoGazdinstvo> vratiSvaGazdinstva() {
+        return dbb.vratiSvaGazdinstva();
+    }
+
+    public boolean dodajGazdinstvo(PoljoprivrednoGazdinstvo pp) {
+        return dbb.dodajGazdinstvo(pp);
+    }
+
+    public boolean izmeniGazdinstvo(PoljoprivrednoGazdinstvo pp2) {
+        return dbb.izmeniGazdinstvo(pp2);
+    }
+
+    public boolean obrisiGazdinstvo(PoljoprivrednoGazdinstvo pp3) {
+        return dbb.obrisiGazdinstvo(pp3);
     }
 }

@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 import model.KlijentskiZahtev;
 import model.Operacije;
 import model.PoljoprivrednaKultura;
+import model.PoljoprivrednoGazdinstvo;
+import model.PoljoprivrednoPreduzece;
 import model.RadnoIskustvo;
 import model.RukovodilacKooperacije;
 import model.ServerskiOdgovor;
@@ -88,6 +90,38 @@ public class ObradaKlijentskihZahteva extends Thread{
                 case Operacije.IZMENIKUL:
                     PoljoprivrednaKultura pk3=(PoljoprivrednaKultura) kz.getZahtev();
                     so.setOdgovor(Controller.getInstance().izmeniKulturu(pk3));
+                    break;
+                case Operacije.VRATIPRED:
+                    
+                    so.setOdgovor(Controller.getInstance().vratiSvaPreduzeca());
+                    break;
+                case Operacije.DODAJPRED:
+                    PoljoprivrednoPreduzece pp=(PoljoprivrednoPreduzece) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().dodajPreduzece(pp));
+                    break;
+                case Operacije.IZMENIPRED:
+                    PoljoprivrednoPreduzece pp2=(PoljoprivrednoPreduzece) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().izmeniPreduzece(pp2));
+                    break;
+                case Operacije.OBRISIPRED:
+                    PoljoprivrednoPreduzece pp3=(PoljoprivrednoPreduzece) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().obrisiPreduzece(pp3));
+                    break;
+                case Operacije.VRATIGAZ:
+                    
+                    so.setOdgovor(Controller.getInstance().vratiSvaGazdinstva());
+                    break;
+                case Operacije.DODAJGAZ:
+                    PoljoprivrednoGazdinstvo pg=(PoljoprivrednoGazdinstvo) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().dodajGazdinstvo(pg));
+                    break;
+                case Operacije.IZMENIGAZ:
+                    PoljoprivrednoGazdinstvo pg2=(PoljoprivrednoGazdinstvo) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().izmeniGazdinstvo(pg2));
+                    break;
+                case Operacije.OBRISIGAZ:
+                    PoljoprivrednoGazdinstvo pg3=(PoljoprivrednoGazdinstvo) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().obrisiGazdinstvo(pg3));
                     break;
                 default:
                     System.out.println("Greska");
