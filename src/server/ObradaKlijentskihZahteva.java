@@ -17,9 +17,11 @@ import model.Operacije;
 import model.PoljoprivrednaKultura;
 import model.PoljoprivrednoGazdinstvo;
 import model.PoljoprivrednoPreduzece;
+import model.Potvrda;
 import model.RadnoIskustvo;
 import model.RukovodilacKooperacije;
 import model.ServerskiOdgovor;
+import model.StavkaPotvrde;
 
 /**
  *
@@ -122,6 +124,22 @@ public class ObradaKlijentskihZahteva extends Thread{
                 case Operacije.OBRISIGAZ:
                     PoljoprivrednoGazdinstvo pg3=(PoljoprivrednoGazdinstvo) kz.getZahtev();
                     so.setOdgovor(Controller.getInstance().obrisiGazdinstvo(pg3));
+                    break;
+                case Operacije.VRATIPOT:
+                    
+                    so.setOdgovor(Controller.getInstance().vratiSvePotvrde());
+                    break;
+                case Operacije.DODAJPOT:
+                    Potvrda p=(Potvrda) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().dodajPotvrdu(p));
+                    break;
+                case Operacije.DODAJSTA:
+                    StavkaPotvrde st=(StavkaPotvrde) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().dodajStavku(st));
+                    break;
+                case Operacije.OBRISIPOT:
+                    Potvrda st2=(Potvrda) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().obrisiPotvrdu(st2));
                     break;
                 default:
                     System.out.println("Greska");

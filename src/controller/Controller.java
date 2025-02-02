@@ -5,12 +5,15 @@
 package controller;
 
 import baza.DBBroker;
+import java.net.Socket;
 import java.util.List;
 import model.PoljoprivrednaKultura;
 import model.PoljoprivrednoGazdinstvo;
 import model.PoljoprivrednoPreduzece;
+import model.Potvrda;
 import model.RadnoIskustvo;
 import model.RukovodilacKooperacije;
+import model.StavkaPotvrde;
 
 /**
  *
@@ -111,5 +114,23 @@ public class Controller {
 
     public boolean obrisiGazdinstvo(PoljoprivrednoGazdinstvo pp3) {
         return dbb.obrisiGazdinstvo(pp3);
+    }
+
+    public List<Potvrda> vratiSvePotvrde() {
+        return dbb.vratiSvePotvrde();
+    }
+
+    public boolean dodajPotvrdu(Potvrda p) {
+        return dbb.dodajPotvrdu(p);
+    }
+
+    public boolean dodajStavku(StavkaPotvrde st) {
+        return dbb.dodajStavku(st);
+    }
+
+    
+
+    public boolean obrisiPotvrdu(Potvrda st2) {
+        return dbb.obrisiPotvrdu(st2);
     }
 }
