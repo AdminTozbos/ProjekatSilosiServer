@@ -141,6 +141,14 @@ public class ObradaKlijentskihZahteva extends Thread{
                     Potvrda st2=(Potvrda) kz.getZahtev();
                     so.setOdgovor(Controller.getInstance().obrisiPotvrdu(st2));
                     break;
+                case Operacije.VRATISTA:
+                    Potvrda st3= (Potvrda) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().vratiSveStavke(st3));
+                    break;
+                case Operacije.IZMENIPOT:
+                    Potvrda st4= (Potvrda) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().izmeniPotvrdu(st4));
+                    break;
                 default:
                     System.out.println("Greska");
             }

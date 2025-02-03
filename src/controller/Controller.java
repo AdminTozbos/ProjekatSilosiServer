@@ -133,4 +133,12 @@ public class Controller {
     public boolean obrisiPotvrdu(Potvrda st2) {
         return dbb.obrisiPotvrdu(st2);
     }
+
+    public List<StavkaPotvrde> vratiSveStavke(Potvrda st3) {
+        return dbb.vratiSveStavke(st3);
+    }
+
+    public boolean izmeniPotvrdu(Potvrda st4) {
+        return dbb.izmeniPotvrdu(st4);
+    }
 }

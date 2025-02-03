@@ -426,15 +426,16 @@ public class DBBroker {
     }
 
     public boolean dodajPotvrdu(Potvrda p) {
-        String query="INSERT INTO potvrda (datumizdavanja,datumvazenja,iznos,idkooperanta,idrukovodioca,flag) VALUES (?,?,?,?,?,?)";
+        String query="INSERT INTO potvrda (id,datumizdavanja,datumvazenja,iznos,idkooperanta,idrukovodioca,flag) VALUES (?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
-            ps.setDate(1,new java.sql.Date(p.getDatumIzdavanja().getTime()));
-            ps.setDate(2, new java.sql.Date(p.getDatumVazenja().getTime()));
-            ps.setDouble(3, p.getUkupanIznos());
-            ps.setInt(4, p.getIdKooperant());
-            ps.setInt(5, p.getIdRukovodilac());
-            ps.setInt(6, p.getKoopFlag());
+            ps.setInt(1, p.getIdPotvrda());
+            ps.setDate(2,new java.sql.Date(p.getDatumIzdavanja().getTime()));
+            ps.setDate(3, new java.sql.Date(p.getDatumVazenja().getTime()));
+            ps.setDouble(4, p.getUkupanIznos());
+            ps.setInt(5, p.getIdKooperant());
+            ps.setInt(6, p.getIdRukovodilac());
+            ps.setInt(7, p.getKoopFlag());
            
 
             ps.executeUpdate();
@@ -479,7 +480,7 @@ public class DBBroker {
         }
         String query2="DELETE FROM stavka WHERE id=?";
         try {
-            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query2);
             ps.setInt(1, st2.getIdPotvrda());
             ps.executeUpdate();
             drugi= true;
@@ -488,5 +489,37 @@ public class DBBroker {
         }
         if(prvi==true&&drugi==true)return true;
         return false;
+    }
+
+    public List<StavkaPotvrde> vratiSveStavke(Potvrda st3) {
+        List<StavkaPotvrde>stavke=new ArrayList<>();
+        String query="SELECT *FROM stavka WHERE id=?";
+        
+         try {
+            
+            PreparedStatement ps=Konekcija.getInstance().getConnection().prepareStatement(query);
+            ps.setInt(1, st3.getIdPotvrda());
+            ResultSet rs=ps.executeQuery();
+             while (rs.next()) {                 
+                 int id=rs.getInt("id");
+                 int rb=rs.getInt("rb");
+                 double cena=rs.getDouble("cena");
+                 double kolicina=rs.getDouble("kolicina");
+                 double iznos=rs.getDouble("iznos");
+                 int idkult=rs.getInt("idkulture");
+                 StavkaPotvrde sp=new StavkaPotvrde(id, rb, cena, kolicina, iznos, idkult);
+                stavke.add(sp);
+             }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return stavke;
+    }
+
+    public boolean izmeniPotvrdu(Potvrda st4) {
+        obrisiPotvrdu(st4);
+        dodajPotvrdu(st4);
+        return true;
     }
 }
