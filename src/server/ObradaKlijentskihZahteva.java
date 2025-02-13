@@ -18,6 +18,7 @@ import model.PoljoprivrednaKultura;
 import model.PoljoprivrednoGazdinstvo;
 import model.PoljoprivrednoPreduzece;
 import model.Potvrda;
+import model.PrRi;
 import model.RadnoIskustvo;
 import model.RukovodilacKooperacije;
 import model.ServerskiOdgovor;
@@ -148,6 +149,22 @@ public class ObradaKlijentskihZahteva extends Thread{
                 case Operacije.IZMENIPOT:
                     Potvrda st4= (Potvrda) kz.getZahtev();
                     so.setOdgovor(Controller.getInstance().izmeniPotvrdu(st4));
+                    break;
+                case Operacije.VRATIPRRI:
+                    
+                    so.setOdgovor(Controller.getInstance().vratiSvePrri());
+                    break;
+                case Operacije.DODAJPRRI:
+                    PrRi prri=(PrRi) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().dodajPrri(prri));
+                    break;
+                case Operacije.OBRISIPRRI:
+                    PrRi prri2=(PrRi) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().obrisiPrri(prri2));
+                    break;
+                case Operacije.IZMENIPRRI:
+                    PrRi prri3=(PrRi) kz.getZahtev();
+                    so.setOdgovor(Controller.getInstance().izmeniPrri(prri3));
                     break;
                 default:
                     System.out.println("Greska");

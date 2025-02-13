@@ -15,6 +15,7 @@ import model.PoljoprivrednaKultura;
 import model.PoljoprivrednoGazdinstvo;
 import model.PoljoprivrednoPreduzece;
 import model.Potvrda;
+import model.PrRi;
 import model.RadnoIskustvo;
 import model.RukovodilacKooperacije;
 import model.StavkaPotvrde;
@@ -32,6 +33,7 @@ public class Controller {
     private GenericDBBroker<PoljoprivrednoGazdinstvo>dbbGAZ;
     private GenericDBBroker<StavkaPotvrde>dbbSTA;
     private GenericDBBroker<Potvrda>dbbPOT;
+    private GenericDBBroker<PrRi>dbbPRI;
 
 
 
@@ -47,6 +49,7 @@ public class Controller {
         dbbGAZ=GenericDBBroker.getInstance();
         dbbSTA=GenericDBBroker.getInstance();
         dbbPOT=GenericDBBroker.getInstance();
+        dbbPRI=GenericDBBroker.getInstance();
     }
     public static Controller getInstance(){
         if(controller==null){
@@ -319,6 +322,44 @@ public class Controller {
             boolean uspehStaBris=dbbSTA.delete(new StavkaPotvrde(st4.getIdPotvrda(), 0, 0, 0, 0, 0));
             boolean uspehDod=dbbPOT.insert(st4);
             if(uspehBris==true&&uspehDod==true)return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public Object vratiSvePrri() {
+        try {
+           
+            return dbbPRI.getAll(new PrRi());
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public boolean dodajPrri(PrRi prri) {
+        try {
+            return dbbPRI.insert(prri);
+        } catch (SQLException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean obrisiPrri(PrRi prri2) {
+        try {
+            return dbbPRI.delete(prri2);
+        } catch (SQLException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean izmeniPrri(PrRi prri3) {
+        try {
+            return dbbPRI.update(prri3);
         } catch (SQLException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
